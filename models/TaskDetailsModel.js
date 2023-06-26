@@ -41,7 +41,11 @@ const Status = {
 
 const TasksSchema = new mongoose.Schema ({
 
-    taskID:String,
+    taskID:{
+        type:String,
+        required : true,
+     
+    },
     name : String,
     date: Date,
     location: {
@@ -55,6 +59,7 @@ const TasksSchema = new mongoose.Schema ({
     auditorAssigned:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'AuditorDetails',
+        
     },
     startTime : Date,
     endTime : Date,

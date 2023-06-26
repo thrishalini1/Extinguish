@@ -84,6 +84,13 @@ const companyData = [
   },
 ];
 
+// CompanyDetails.deleteMany({
+//   salesOfficerContact: "34567 82341"
+// }).then((result)=>{
+// console.log(result);
+
+// });
+
 CompanyDetails.insertMany(companyData)
   .then((result) => {
     console.log(result);

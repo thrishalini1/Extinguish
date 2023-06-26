@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 
 // struct Auditor{
     
@@ -31,7 +29,14 @@ const auditorSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: true
+    validate: {
+      validator: function(v) {
+        return /\d{3}-\d{3}-\d{4}/.test(v);
+      },
+      message: props => `${props.value} is not a valid phone number!`
+      },
+    required: [true, 'User phone number required'],
+    trim : true
   },
   email: {
     type: String,
@@ -48,5 +53,51 @@ const auditorSchema = new mongoose.Schema({
 });
 
 const AuditorDetails = mongoose.model('AuditorDetails', auditorSchema);
+
+
+
+const auditorData = [
+  {
+    profilePic: '/path/to/profilepic1.jpg',
+    empID: 'EMP001',
+    name: 'John Doe',
+    phoneNumber: '1234567890',
+    email: 'john.doe@example.com',
+    location: { lat: 37.7749, long: -122.4194 },
+    assignedTasks: [
+      new mongoose.Types.ObjectId(),
+      new mongoose.Types.ObjectId()
+    ]
+  },
+  {
+    profilePic: '/path/to/profilepic2.jpg',
+    empID: 'EMP002',
+    name: 'Jane Smith',
+    phoneNumber: '9876543210',
+    email: 'jane.smith@example.com',
+    location: { lat: 40.7128, long: -74.0060 },
+    assignedTasks: [
+      new mongoose.Types.ObjectId(),
+      new mongoose.Types.ObjectId()
+    ]
+  }
+];
+
+// CompanyDetails.deleteMany({
+//   salesOfficerContact: "34567 82341"
+// }).then((result)=>{
+// console.log(result);
+
+// });
+
+AuditorDetails.insertMany(auditorData)
+  .then((result) => {
+    console.log(result);
+    console.log("Documents inserted successfully");
+  })
+  .catch((error) => {
+    console.log("Unable to insert documents", error);
+  });
+
 
 module.exports = AuditorDetails;
