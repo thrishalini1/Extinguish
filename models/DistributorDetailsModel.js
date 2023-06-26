@@ -23,12 +23,12 @@ const distributorDetailsData = [
   {
     distributorName: 'ABC Distributors',
     distributorContact: '1234567890',
-    distributorAddress: '123 Main Street, City, Country'
+    distributorAddress: '123 Main Street, Delhi City, Country'
   },
   {
     distributorName: 'XYZ Distributors',
     distributorContact: '9876543210',
-    distributorAddress: '456 Park Avenue, City, Country'
+    distributorAddress: '456 Park Avenue, Mumbai City, Country'
   }
 ];
 

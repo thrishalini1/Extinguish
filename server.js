@@ -3,8 +3,9 @@ const { mongoose } = require("mongoose");
 // import mongoose from "mongoose";
 
 
-const CompanyDetails = require("./models/CompanyDetailsModel");
-const AuditorDetails = require("./models/AuditorDetailsModel")
+// const CompanyDetails = require("./models/CompanyDetailsModel");
+// const AuditorDetails = require("./models/AuditorDetailsModel")
+
 const connectToMongo = async () => {
     await mongoose.connect("mongodb://127.0.0.1:27017/Extinguish_Backend",{ 
     useNewUrlParser: true});
@@ -12,6 +13,6 @@ const connectToMongo = async () => {
 
   };
   
- console.log(CompanyDetails)
- console.log(AuditorDetails)
+//  console.log(CompanyDetails)
+//  console.log(AuditorDetails)
   connectToMongo()
