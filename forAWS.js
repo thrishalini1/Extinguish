@@ -94,13 +94,19 @@ db.run(
     'VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?, ?)',
     'Take the batches of Calpol and Dolo65',
     '2023-06-10',
+    // JSON('{"latitude": 123.456, "longitude": 789.012 }'),
     JSON.stringify({ "latitude": 123.456, "longitude": 789.012 }),
     1,
-    967890,
+    96789,
     76543,
     '09:00:00',
     '13:30:00',
-    JSON.stringify({ "distributorName": "Arohi Distributors", "distributorContact": "8344597890", "distributorAddress": "123 Main Street, Delhi City, Country" }),
+    JSON.stringify({
+      "distributorName": "GHT Distributors",
+      "distributorContact": "9876543210",
+      "distributorAddress": "456 Park Avenue, Mumbai City, Country"
+    }
+    ),
     JSON.stringify({ "companyName": "Kalinga pharma Corporation", "salesOfficerName": "Gayathri", "salesOfficerContact": "34567 82341" }),
     function(err) {
       if (err) {
@@ -117,12 +123,12 @@ db.run(
     '2023-06-11',
     '{"latitude": 45.678, "longitude": 90.123}',
     2,
-    967890,
+    96789,
     76544,
     '14:00:00',
     '21:45:00',
-    '"distributorName":"GHT Distributors","distributorContact": "9876543210","distributorAddress": "456 Park Avenue, Mumbai City, Country"',
-    '"companyName": "Britania","salesOfficerName": "Ragul","salesOfficerContact": "34567 82341"',
+    JSON.stringify({"distributorName": "GHT Distributors","distributorContact": "9876543210","distributorAddress": "456 Park Avenue, Mumbai City, Country"}),
+    JSON.stringify({"companyName": "Britania","salesOfficerName": "Ragul","salesOfficerContact": "34567 82341"}),
     function(err) {
       if (err) {
         console.error(err.message);
@@ -208,6 +214,10 @@ app.get('/auditors', (req, res) => {
       console.error(err);
       res.status(500).send('Internal Server Error');
     } else {
+      for(let i=0;i<rows.length;i++)
+      { rows[i].location = JSON.parse(rows[i].location);
+
+      }
       res.json(rows);
     }
   });
@@ -232,6 +242,8 @@ app.get('/auditors/:id', (req, res) => {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else if (row) {
+        row[i].location = JSON.parse(row[i].location);
+      
         res.json(row);
       } else {
         res.status(404).send('User not found');
@@ -246,6 +258,10 @@ app.get('/managers/:id', (req, res) => {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else if (row) {
+
+        
+
+
         res.json(row);
       } else {
         res.status(404).send('User not found');
@@ -262,6 +278,11 @@ app.get('/tasks/auditor/:auditorId',(req,res)=>{
       res.status(500).send('Internal Server Error');
   }
   else{
+       for(let i=0;i<rows.length;i++)
+         { rows[i].location = JSON.parse(rows[i].location);
+          rows[i].distributorDetails = JSON.parse(rows[i].distributorDetails)
+          rows[i].companyDetails = JSON.parse(rows[i].companyDetails)
+         }
       res.json(rows);
   }
   })
@@ -277,6 +298,11 @@ app.get('/tasks/manager/:managerId',(req,res)=>{
       res.status(500).send('Internal Server Error');
   }
   else{
+    for(let i=0;i<rows.length;i++)
+    { rows[i].location = JSON.parse(rows[i].location);
+     rows[i].distributorDetails = JSON.parse(rows[i].distributorDetails)
+     rows[i].companyDetails = JSON.parse(rows[i].companyDetails)
+    }
       res.json(rows);
   }
   })
@@ -294,9 +320,13 @@ app.get('/listOftasks',(req,res)=>{
             res.status(500).send('Internal Server Error');
         }
         else{
+          for(let i=0;i<rows.length;i++)
+          { rows[i].location = JSON.parse(rows[i].location);
+           rows[i].distributorDetails = JSON.parse(rows[i].distributorDetails)
+           rows[i].companyDetails = JSON.parse(rows[i].companyDetails)
+          }
             res.json(rows);
-            const location = JSON.parse(rows[0].location);
-            console.log(location.latitude);
+            
 
         }
     });
@@ -313,6 +343,10 @@ app.get('/myAuditors/:managerId', (req, res) => {
       console.error(err);
       res.status(500).send('Internal Server Error');
     } else {
+      for(let i=0;i<rows.length;i++)
+      { rows[i].location = JSON.parse(rows[i].location);
+
+      }
       res.json(rows);
     }
   });
@@ -329,6 +363,10 @@ app.get('/listOfTasks/:id',(req,res)=>{
       console.error(err);
       res.status(500).send('Internal Server Error');
     } else if (row) {
+        row[i].location = JSON.parse(row[i].location);
+       row[i].distributorDetails = JSON.parse(row[i].distributorDetails)
+       row[i].companyDetails = JSON.parse(row[i].companyDetails)
+      
       res.json(row);
     } else {
       res.status(404).send('Task not found');
@@ -346,6 +384,7 @@ app.get('/listOfTasks/subTasks/:id',(req,res)=>{
       res.status(500).send('Internal Server Error');
     }
   else{
+    
       res.json(rows);
   }
   })
