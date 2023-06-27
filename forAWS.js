@@ -79,7 +79,7 @@ db.serialize(() => {
   db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
           VALUES (2, 'DEF Stock', 784729, 978543217, '2022-02-01', '2022-10-01', 111, 110, 9, 1)`);
   db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
-          VALUES (3, 'KKJ Stock', 786729, 65734217, '2017-07-01', '2022-10-01', 566, 78, 9, 2)`);
+          VALUES (3, 'britania', 786729, 65734217, '2017-07-01', '2022-10-01', 566, 78, 9, 2)`);
 });
 
 
@@ -129,6 +129,27 @@ db.run(
     '21:45:00',
     JSON.stringify({"distributorName": "GHT Distributors","distributorContact": "9876543210","distributorAddress": "456 Park Avenue, Mumbai City, Country"}),
     JSON.stringify({"companyName": "Britania","salesOfficerName": "Ragul","salesOfficerContact": "34567 82341"}),
+    function(err) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log('Row inserted successfully.');
+      }
+    }
+  );
+  db.run(
+    'INSERT INTO tasks (name, date, location, taskStatus, auditorAssigned,managerAssigned, startTime, endTime, distributorDetails, companyDetails) ' +
+    'VALUES (?, ?, ?, ?, ?, ?, ? , ?, ?, ?)',
+    'dispose the dolo650 tablets',
+    '2021-1-5',
+    '{"latitude": 45.678, "longitude": 90.123}',
+    2,
+    96789,
+    76544,
+    '5:45:00',
+    '19:00:00',
+    JSON.stringify({"distributorName": "Aishray Distributors","distributorContact": "9876543210","distributorAddress": "127/93 Pillaiyar Avenue, Chennai City, India"}),
+    JSON.stringify({"companyName": "apollo","salesOfficerName": "senthil","salesOfficerContact": "34567 82341"}),
     function(err) {
       if (err) {
         console.error(err.message);
