@@ -96,8 +96,8 @@ db.run(
     '2023-06-10',
     // JSON('{"latitude": 123.456, "longitude": 789.012 }'),
     JSON.stringify({ "latitude": 123.456, "longitude": 789.012 }),
-    1,
-    96789,
+    0,
+    0,
     76543,
     '09:00:00',
     '13:30:00',
@@ -143,7 +143,7 @@ db.run(
     'dispose the dolo650 tablets',
     '2021-1-5',
     '{"latitude": 45.678, "longitude": 90.123}',
-    2,
+    1,
     96789,
     76544,
     '5:45:00',
@@ -161,7 +161,7 @@ db.run(
   // vansh
 });
 
-
+// 0 - unassigned , 1 - in progress , 3 - completed 
 
 app.get('/login/:email&:password',(req,res)=>{
   const {email,password}  = req.params;
@@ -520,6 +520,24 @@ app.post('/tasks/auditor/:taskId/', (req, res) => {
 });
 
 
+app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
+  const {taskId } = req.params;
+  const { subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer } = req.body;
+
+
+  db.run(
+    'INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId],
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.status(201).send('Subtask created successfully');
+      }
+    }
+  );
+});
 
 
 
