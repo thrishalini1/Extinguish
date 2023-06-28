@@ -5,36 +5,9 @@ const app = express();
 const multer = require('multer')
 const path = require('path')
 const auth_controller = require('./auth_controller.js')
+const imagesRoute = require('./routes/images.js')
 
 
-
-const storage = multer.diskStorage({
-      destination: function(req,file,cb){
-        cb(null,'./uploads');
-      },
-      filename:function(req,file,cb){
-        cb(null, new Data().getTime() + path.extname(file.originalname));
-      }
-});
-
-
-const fileFilter = (req,file,cb) =>{
-  if(mime.fileType === 'image/jpeg'|| mime.fileType === 'image/png'){
-    cb(null,true);
-  }
-  else{
-    cb(new Error('Unsupported file type. Send jpeg or png'),false);
-  }
-}
-
-
-const upload = multer({
- storage:storage,
- limits:{
-  fileSize:1024*1024*10
-  // 10MB
- },
-})
 
 
 
@@ -263,7 +236,7 @@ app.get('/auditors/:id', (req, res) => {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else if (row) {
-        row[i].location = JSON.parse(row[i].location);
+        row.location = JSON.parse(row.location);
       
         res.json(row);
       } else {
@@ -540,6 +513,9 @@ app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
 });
 
 
+
+
+app.use("/image",imagesRoute);
 
 
 // Start the server
