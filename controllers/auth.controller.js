@@ -1,20 +1,27 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const json = require('json');
+const express = require('express');
 const sqlite3 = require('sqlite3');
-const {run} = require('./forAWS');
+// const { run } = require('./forAWS');
 
-ourKey = 67666
+const ourKey = 67666;
 
 
-// const db = new sqlite3.Database(':memory:', (err) => {
-//     if (err) {
-//       console.error('Error opening database:', err.message);
-//       return;
-//     }
-//     console.log('Connected to the in-memory SQLite database.');
-//   });
 
+const db = new sqlite3.Database('database.db', (err) => {
+  if (err) {
+    console.error('Error opening database:', err.message);
+    return;
+  }
+  console.log('Connected to database SQLite database.');
+});
+
+
+
+
+
+
+  
 
 
 
