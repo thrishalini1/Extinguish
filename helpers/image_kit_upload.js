@@ -16,7 +16,8 @@ var imagekit = new ImageKit({
 });
 
 // const FILE_PATH = path.resolve(__dirname, "../uploads/recent.jpg")
-const FILE_PATH = path.resolve(__dirname, "../uploads/Main Resume.pdf")
+// const FILE_PATH = path.resolve(__dirname, "../uploads/Main Resume.pdf")
+const FILE_PATH = path.resolve(__dirname, "../uploads/sample_video.mp4")
 // const response = uploadLocalFile(imagekit, FILE_PATH, `my_pic.jpg`);
 // console.log(`Binary upload response :`, JSON.stringify(response, undefined, 2), "\n");
 
