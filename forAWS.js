@@ -313,6 +313,23 @@ app.use(express.json())
 //   });
 // });
 
+app.get('tasks/:taskId/completed',(req,res)=>{
+  const {taskId} = req.taskId;
+  db.run(
+    'UPDATE tasks SET taskStatus = ? WHERE taskId = ?',
+    [2,taskId],
+    function(err) {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+      } else if (this.changes === 0) {
+        res.status(404).send('Task not found');
+      } else {
+        res.status(200).send('Task updated successfully');
+      }
+    }
+  );
+})
 
 app.post('/auditors',auth_controller.signUp);
 app.post('/managers',auth_controller.signUp);
@@ -363,8 +380,8 @@ app.post('/tasks/auditor/:taskId/', (req, res) => {
   const { auditorAssigned } = req.body;
 
   db.run(
-    'UPDATE tasks SET auditorAssigned = ? WHERE taskId = ?',
-    [auditorAssigned, taskId],
+    'UPDATE tasks SET auditorAssigned = ? , taskStatus = ? WHERE taskId = ?',
+    [auditorAssigned,1,taskId],
     function(err) {
       if (err) {
         console.error(err.message);
