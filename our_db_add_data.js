@@ -14,10 +14,20 @@ const db = new sqlite3.Database('database.db');
 // Create a table and insert some data (run this only once)
 db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS auditors (auditorId INTEGER PRIMARY KEY AUTOINCREMENT ,profile_pic BLOB NULL, name TEXT, age number(3), gender INTEGER,email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50),managerId INTEGER, location JSON , FOREIGN KEY (managerId) REFERENCES managers(managerId) )');
-  db.run("INSERT INTO auditors (auditorId , name,age, gender,email,phoneNumber,address,password,managerId,location) VALUES (96789 ,'Thrishalini Dwaraknath',56,3,'trishalini973@gmail.com' ,'9940179755','dubai mall,dubai main road,dubai','123' ,76543, ?)","{\"latitude\": 123.456, \"longitude\": 789.012} ");
-  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Vansh Agarwal',34,1, 'vanshAgarwal@gmail.com','9600193145','dubai mall,dubai main road,dubai','456' ,76543, ?  )", "{\"latitude\": 123.456, \"longitude\": 789.012}");
-  // vansh
+  db.run("INSERT INTO auditors (auditorId , name,age, gender,email,phoneNumber,address,password,managerId,location) VALUES (967890 ,'Thrishalini Dwaraknath',56,'3','trishalini973@gmail.com' ,'9940179755','dubai mall,dubai main road,dubai','123' ,76543, ?)","{\"latitude\": 123.456, \"longitude\": 789.012} ");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Vansh Agarwal',34,'1', 'vanshAgarwal@gmail.com','9600193145','dubai mall,dubai main road,dubai','456' ,76543, ?  )", "{\"latitude\": 123.456, \"longitude\": 789.012}");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Gaurav Ganju',51,'1', 'gauravganju@gmail.com','9636264636','Vasant Kunj, South Delhi, Delhi','456' ,76543, ?  )", "{\"latitude\": 120.006, \"longitude\": 709.092}");
+  db.run("INSERT INTO auditors (name,age, gender,email,phoneNumber,address,password,managerId,location) VALUES ('Monku Naidu', 29 ,'2','monkunaidu@gmail.com' ,'9955179745','Saket, Delhi','123' ,76544, ?)","{\"latitude\": 123.456, \"longitude\": 789.012} ");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Pratham Pandey',30,'1', 'prathampandey@gmail.com','9600144445','dubai mall,dubai main road,dubai','456' ,76544, ?  )", "{\"latitude\": 230.456, \"longitude\": 689.012}");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Sameer Ganju',24,'1', 'sameerganju@gmail.com','9323264636','Vasant Kunj, South Delhi, Delhi','456' ,76544, ?  )", "{\"latitude\": 160.006, \"longitude\": 799.092}");
+  db.run("INSERT INTO auditors (name,age, gender,email,phoneNumber,address,password,managerId,location) VALUES ('Anushka Jain', 35 ,'2','anushkajain@gmail.com' ,'9785179382','Pratap Nagar, Jaipur','123' ,76545, ?)","{\"latitude\": 213.336, \"longitude\": 723.452} ");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Rajesh Prajapati',42,'4', 'rajeshprajapati@gmail.com','9604411445','Vesu, Surat','456' ,76545, ?  )", "{\"latitude\": 213.323, \"longitude\": 686.558}");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Yash Singh',55,'3', 'singhyash@gmail.com','6378666444','Civil Lines, Kanpur','456' ,76545, ?  )", "{\"latitude\": 193.869, \"longitude\": 943.948}");
+
 });
+
+
+
 
 // db.serialize(()=>{
 // });
@@ -28,9 +38,9 @@ db.serialize(() => {
 
 db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS managers (managerId INTEGER PRIMARY KEY AUTOINCREMENT,profile_pic BLOB NULL, name TEXT, age number(3),gender INTEGER, email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50))');
-  db.run("INSERT INTO managers (managerId , name,age,gender, email,phoneNumber,address,password) VALUES (76543 ,'Tanvi Gupta',68,2,'fluteGupta@kpmCC.in','5675656756','Kuwait Mall,Kuwait Main Road,Kuwait','123' )");
-  db.run("INSERT INTO managers (name,age,gender, email,phoneNumber,address,password) VALUES ('Jane Smith',37,2,'janeSmi@kpmCC.in' ,'9677285350','Kuwait Mall,Kuwait Main Road,Kuwait', '456' )");
-  // vansh
+  db.run("INSERT INTO managers (managerId , name,age,gender, email,phoneNumber,address,password) VALUES (76543 ,'Tanvi Gupta',69,'2','fluteGupta@kpmCC.in','5675656756','Potheri, Chennai','123' )");
+  db.run("INSERT INTO managers (name,age,gender, email,phoneNumber,address,password) VALUES ('Jane Smith',37,'1','janeSmi@kpmCC.in' ,'9677285350','Kuwait Mall,Kuwait Main Road,Kuwait', '456' )");
+  db.run("INSERT INTO managers (name,age,gender, email,phoneNumber,address,password) VALUES ('Vinita Kumari',45,'2','kumvin@kpmCC.in' ,'9829033000','Housing Board Colony, Nagaur', '456' )");
 });
 
 
@@ -86,7 +96,7 @@ db.run(
     '{"latitude": 45.678, "longitude": 90.123}',
     2,
     96789,
-    76544,
+    76543,
     '14:00:00',
     '21:45:00',
     JSON.stringify({"distributorName": "GHT Distributors","distributorContact": "9876543210","distributorAddress": "456 Park Avenue, Mumbai City, Country"}),
@@ -107,7 +117,7 @@ db.run(
     '{"latitude": 45.678, "longitude": 90.123}',
     1,
     96789,
-    76544,
+    76543,
     '5:45:00',
     '19:00:00',
     JSON.stringify({"distributorName": "Aishray Distributors","distributorContact": "9876543210","distributorAddress": "127/93 Pillaiyar Avenue, Chennai City, India"}),
