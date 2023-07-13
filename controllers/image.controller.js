@@ -13,8 +13,8 @@ const db = new sqlite3.Database('database.db', (err) => {
   });
 
 
-  const profilePicData = fs.readFileSync('/Users/thrisha/Desktop/backup/Extinguish_backend/Extinguish/uploads/recent.jpg');
-
+  const profilePicData = fs.readFileSync('uploads/recent.jpg');
+  
 
 function upload(req,res){
     if(req.file.filename){
