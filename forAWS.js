@@ -357,7 +357,7 @@ app.post('/tasks', (req, res) => {
   );
 });
 
-// Define a PUT route to update the auditorAssigned field of a task
+// a route to update the auditorAssigned field of a task
 app.post('/tasks/auditor/:taskId/', (req, res) => {
   const { taskId } = req.params;
   const { auditorAssigned } = req.body;
