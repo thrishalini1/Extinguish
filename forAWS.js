@@ -368,7 +368,7 @@ app.post('/tasks', (req, res) => {
         res.status(500).send('Internal Server Error');
       } else {
         const taskId = this.lastID;
-        res.status(201).json({ taskId, name, date, location, taskStatus, auditorAssigned, managerAssigned, startTime, endTime, distributorDetails, companyDetails });
+        res.status(200).json({ taskId, name, date, location, taskStatus, auditorAssigned, managerAssigned, startTime, endTime, distributorDetails, companyDetails });
       }
     }
   );
@@ -409,7 +409,7 @@ app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else {
-        res.status(201).send('Subtask created successfully');
+        res.status(200).send('Subtask created successfully');
       }
     }
   );
