@@ -23,6 +23,69 @@ const db = new sqlite3.Database('database.db', (err) => {
 
 
 
+app.get('/login/:email&:password',(req,res)=>{
+  const {email,password}  = req.params;
+
+
+  db.get('SELECT * FROM auditors WHERE email = ?',email,(err,row)=>{
+    if(err){
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+    else if(row){
+      // console.log(res)
+      db.get('SELECT * FROM auditors WHERE password = ?',password,(err,row)=>{
+        if(err){
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+        }
+        else if(row){
+          res.json({'exists':true,'who':'A','id':row.auditorId})
+        }
+        else{
+          res.status(400).send('Wrong Password')
+        }
+      })
+      // res.json(row)
+
+    }
+    else{
+      db.get('SELECT * FROM managers WHERE email = ?',email,(err,row)=>{
+        if(err){
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+        }
+        else if(row){
+          db.get('SELECT * FROM managers WHERE password = ?',password,(err,row)=>{
+            if(err){
+              console.error(err);
+              res.status(500).send('Internal Server Error');
+            }
+            else if(row){
+              res.json({'exists':true,'who':'M','id':row.managerId})
+            }
+            else{
+              res.status(400).send('Wrong Password')
+            }
+          })
+        }
+        else{
+          res.json({'exists':false})
+        }
+
+      })
+
+      
+    }
+
+
+  }) 
+
+})
+
+
+
+
 
 // Define a GET route to fetch all auditors
 app.get('/auditors', (req, res) => {
@@ -335,7 +398,7 @@ app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
   );
 });
 
-
+app.post('/task')
 
 
 app.use("/image/",imagesRoute);

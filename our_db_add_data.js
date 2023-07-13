@@ -13,9 +13,9 @@ const db = new sqlite3.Database('database.db');
 
 // Create a table and insert some data (run this only once)
 db.serialize(() => {
-  db.run('CREATE TABLE IF NOT EXISTS auditors (auditorId INTEGER PRIMARY KEY AUTOINCREMENT ,profile_pic BLOB NULL, name TEXT, age number(3), gender varchar(1),email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50),managerId INTEGER, location JSON , FOREIGN KEY (managerId) REFERENCES managers(managerId) )');
-  db.run("INSERT INTO auditors (auditorId , name,age, gender,email,phoneNumber,address,password,managerId,location) VALUES (96789 ,'Thrishalini Dwaraknath',56,'3','trishalini973@gmail.com' ,'9940179755','dubai mall,dubai main road,dubai','123' ,76543, ?)","{\"latitude\": 123.456, \"longitude\": 789.012} ");
-  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Vansh Agarwal',34,'1', 'vanshAgarwal@gmail.com','9600193145','dubai mall,dubai main road,dubai','456' ,76543, ?  )", "{\"latitude\": 123.456, \"longitude\": 789.012}");
+  db.run('CREATE TABLE IF NOT EXISTS auditors (auditorId INTEGER PRIMARY KEY AUTOINCREMENT ,profile_pic BLOB NULL, name TEXT, age number(3), gender INTEGER,email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50),managerId INTEGER, location JSON , FOREIGN KEY (managerId) REFERENCES managers(managerId) )');
+  db.run("INSERT INTO auditors (auditorId , name,age, gender,email,phoneNumber,address,password,managerId,location) VALUES (96789 ,'Thrishalini Dwaraknath',56,3,'trishalini973@gmail.com' ,'9940179755','dubai mall,dubai main road,dubai','123' ,76543, ?)","{\"latitude\": 123.456, \"longitude\": 789.012} ");
+  db.run("INSERT INTO auditors (name,age,gender ,email,phoneNumber,address,password,managerId,location) VALUES ('Vansh Agarwal',34,1, 'vanshAgarwal@gmail.com','9600193145','dubai mall,dubai main road,dubai','456' ,76543, ?  )", "{\"latitude\": 123.456, \"longitude\": 789.012}");
   // vansh
 });
 
@@ -27,9 +27,9 @@ db.serialize(() => {
 
 
 db.serialize(() => {
-  db.run('CREATE TABLE IF NOT EXISTS managers (managerId INTEGER PRIMARY KEY AUTOINCREMENT,profile_pic BLOB NULL, name TEXT, age number(3),gender varchar(1), email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50))');
-  db.run("INSERT INTO managers (managerId , name,age,gender, email,phoneNumber,address,password) VALUES (76543 ,'Tanvi Gupta',68,'2','fluteGupta@kpmCC.in','5675656756','Kuwait Mall,Kuwait Main Road,Kuwait','123' )");
-  db.run("INSERT INTO managers (name,age,gender, email,phoneNumber,address,password) VALUES ('Jane Smith',37,'2','janeSmi@kpmCC.in' ,'9677285350','Kuwait Mall,Kuwait Main Road,Kuwait', '456' )");
+  db.run('CREATE TABLE IF NOT EXISTS managers (managerId INTEGER PRIMARY KEY AUTOINCREMENT,profile_pic BLOB NULL, name TEXT, age number(3),gender INTEGER, email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50))');
+  db.run("INSERT INTO managers (managerId , name,age,gender, email,phoneNumber,address,password) VALUES (76543 ,'Tanvi Gupta',68,2,'fluteGupta@kpmCC.in','5675656756','Kuwait Mall,Kuwait Main Road,Kuwait','123' )");
+  db.run("INSERT INTO managers (name,age,gender, email,phoneNumber,address,password) VALUES ('Jane Smith',37,2,'janeSmi@kpmCC.in' ,'9677285350','Kuwait Mall,Kuwait Main Road,Kuwait', '456' )");
   // vansh
 });
 
@@ -125,70 +125,9 @@ db.run(
 
 // 0 - unassigned , 1 - in progress , 3 - completed 
 
-app.get('/login/:email&:password',(req,res)=>{
-  const {email,password}  = req.params;
-
-
-  db.get('SELECT * FROM auditors WHERE email = ?',email,(err,row)=>{
-    if(err){
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
-    else if(row){
-      // console.log(res)
-      db.get('SELECT * FROM auditors WHERE password = ?',password,(err,row)=>{
-        if(err){
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-        }
-        else if(row){
-          res.json({'exists':true,'who':'A','id':row.auditorId})
-        }
-        else{
-          res.status(400).send('Wrong Password')
-        }
-      })
-      // res.json(row)
-
-    }
-    else{
-      db.get('SELECT * FROM managers WHERE email = ?',email,(err,row)=>{
-        if(err){
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-        }
-        else if(row){
-          db.get('SELECT * FROM managers WHERE password = ?',password,(err,row)=>{
-            if(err){
-              console.error(err);
-              res.status(500).send('Internal Server Error');
-            }
-            else if(row){
-              res.json({'exists':true,'who':'M','id':row.managerId})
-            }
-            else{
-              res.status(400).send('Wrong Password')
-            }
-          })
-        }
-        else{
-          res.json({'exists':false})
-        }
-
-      })
-
-      
-    }
-
-
-  }) 
-
-})
-
-
 
 
 db.serialize(()=>{
-  db.run("CREATE TABLE IF NOT EXISTS documents (documentId INTEGER Primary Key, taskID INTEGER NULL,FOREIGN KEY (taskId) REFERENCES tasks(taskId) )");
+  db.run("CREATE TABLE IF NOT EXISTS documents (documentId VARCHAR(50) Primary Key, taskID INTEGER NULL,FOREIGN KEY (taskId) REFERENCES tasks(taskId) )");
   db.run("CREATE TABLE IF NOT EXISTS location_list (taskId INTEGER ,time TIME , date DATE , location JSON  )");
 });
