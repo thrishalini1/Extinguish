@@ -52,6 +52,12 @@ db.serialize(() => {
           VALUES (2, 'DEF Stock', 784729, 978543217, '2022-02-01', '2022-10-01', 111, 110, 9, 1)`);
   db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
           VALUES (3, 'britania', 786729, 65734217, '2017-07-01', '2022-10-01', 566, 78, 9, 2)`);
+  db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
+          VALUES (4, 'Sundae', 789729, 65775110, '2017-07-04', '2022-09-01', 56, 68, 9, 2)`);
+  db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
+          VALUES (3, 'Fortune', 385031, 64063289, '2013-03-09', '2023-06-24', 536, 72, 19, 3)`);
+  db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
+          VALUES (3, 'Nestle', 349823, 76373004, '2019-07-01', '2023-02-01', 349, 8, 1, 3)`);
 });
 
 
@@ -130,6 +136,49 @@ db.run(
       }
     }
   );
+  db.run(
+    'INSERT INTO tasks (name, date, location, taskStatus, auditorAssigned,managerAssigned, startTime, endTime, distributorDetails, companyDetails) ' +
+    'VALUES (?, ?, ?, ?, ?, ?, ? , ?, ?, ?)',
+    'dispose the dolo650 tablets',
+    '2021-1-5',
+    '{"latitude": 45.678, "longitude": 90.123}',
+    1,
+    967891,
+    76543,
+    '5:45:00',
+    '19:00:00',
+    JSON.stringify({"distributorName": "Shakambri Distribution","distributorContact": "9876543310","distributorAddress": "33/167, Dehradun, India"}),
+    JSON.stringify({"companyName": "Cipla","salesOfficerName": "Rakesh","salesOfficerContact": "34567 81113}),
+    function(err) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log('Row inserted successfully.');
+      }
+    }
+  );
+db.run(
+    'INSERT INTO tasks (name, date, location, taskStatus, auditorAssigned,managerAssigned, startTime, endTime, distributorDetails, companyDetails) ' +
+    'VALUES (?, ?, ?, ?, ?, ?, ? , ?, ?, ?)',
+    'dispose the dolo650 tablets',
+    '2021-1-5',
+    '{"latitude": 45.678, "longitude": 90.123}',
+    3,
+    967891,
+    76543,
+    '5:45:00',
+    '19:00:00',
+    JSON.stringify({"distributorName": "Lal path Distributors","distributorContact": "6345543210","distributorAddress": "91/54, VIP Road, Surat, Gujrat, India"}),
+    JSON.stringify({"companyName": "Sun Pharma","salesOfficerName": "Suresh","salesOfficerContact": "85839 46763"}),
+    function(err) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log('Row inserted successfully.');
+      }
+    }
+  );
+  
   // vansh
 });
 
