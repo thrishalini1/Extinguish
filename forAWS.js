@@ -313,6 +313,23 @@ app.use(express.json())
 //   });
 // });
 
+app.get('tasks/:taskId/completed',(req,res)=>{
+  const {taskId} = req.taskId;
+  db.run(
+    'UPDATE tasks SET taskStatus = ? WHERE taskId = ?',
+    [2,taskId],
+    function(err) {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+      } else if (this.changes === 0) {
+        res.status(404).send('Task not found');
+      } else {
+        res.status(200).send('Task updated successfully');
+      }
+    }
+  );
+})
 
 app.post('/auditors',auth_controller.signUp);
 app.post('/managers',auth_controller.signUp);
@@ -351,7 +368,7 @@ app.post('/tasks', (req, res) => {
         res.status(500).send('Internal Server Error');
       } else {
         const taskId = this.lastID;
-        res.status(201).json({ taskId, name, date, location, taskStatus, auditorAssigned, managerAssigned, startTime, endTime, distributorDetails, companyDetails });
+        res.status(200).json({ taskId, name, date, location, taskStatus, auditorAssigned, managerAssigned, startTime, endTime, distributorDetails, companyDetails });
       }
     }
   );
@@ -363,8 +380,8 @@ app.post('/tasks/auditor/:taskId/', (req, res) => {
   const { auditorAssigned } = req.body;
 
   db.run(
-    'UPDATE tasks SET auditorAssigned = ? WHERE taskId = ?',
-    [auditorAssigned, taskId],
+    'UPDATE tasks SET auditorAssigned = ? , taskStatus = ? WHERE taskId = ?',
+    [auditorAssigned,1,taskId],
     function(err) {
       if (err) {
         console.error(err.message);
@@ -392,7 +409,7 @@ app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
         console.error(err);
         res.status(500).send('Internal Server Error');
       } else {
-        res.status(201).send('Subtask created successfully');
+        res.status(200).send('Subtask created successfully');
       }
     }
   );
