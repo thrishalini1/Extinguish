@@ -398,12 +398,11 @@ app.post('/tasks/auditor/:taskId/', (req, res) => {
 
 app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
   const {taskId } = req.params;
-  const { subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer } = req.body;
-
+  const { stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer } = req.body;
 
   db.run(
-    'INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId],
+    'INSERT INTO subtasks ( stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [ stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId],
     (err) => {
       if (err) {
         console.error(err);

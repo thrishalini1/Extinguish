@@ -148,7 +148,7 @@ db.run(
     '5:45:00',
     '19:00:00',
     JSON.stringify({"distributorName": "Shakambri Distribution","distributorContact": "9876543310","distributorAddress": "33/167, Dehradun, India"}),
-    JSON.stringify({"companyName": "Cipla","salesOfficerName": "Rakesh","salesOfficerContact": "34567 81113}),
+    JSON.stringify({"companyName": "Cipla","salesOfficerName": "Rakesh","salesOfficerContact": "34567 81113"}),
     function(err) {
       if (err) {
         console.error(err.message);
