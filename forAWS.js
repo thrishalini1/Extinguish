@@ -23,6 +23,7 @@ const db = new sqlite3.Database('database.db', (err) => {
 
 
 
+
 app.get('/login/:email&:password',(req,res)=>{
   const {email,password}  = req.params;
 
@@ -412,6 +413,67 @@ app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
       }
     }
   );
+});
+
+
+function gh(auditorId) {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT COUNT(*) AS len FROM tasks WHERE auditorAssigned=? AND taskStatus = 1', auditorId, (err, rama) => {
+      if (err) {
+        reject(err);
+      } else {
+        // console.log(rama[0]);
+        resolve(rama[0].len);
+      }
+    });
+  });
+}
+  
+  
+
+app.get('/myAuditors/:managerId/:taskId', (req, res) => {
+  const { managerId ,taskId} = req.params;
+
+  db.all('SELECT location FROM tasks WHERE taskId = ? ',taskId, (err, row) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      
+      row[0].location = JSON.parse(row[0].location);
+
+      db.all('SELECT * FROM auditors WHERE managerId = ?',managerId , (err,rowsa)=>{
+
+      let len =0
+      for(let i=0;i<rowsa.length;i++)
+      { 
+         gh(rowsa[i].auditorId).then(result => {
+          // console.log(result); 
+          len = result
+          }).catch(error => {
+          console.error(error);
+        });
+        // console.log(len)
+        rowsa[i].location = JSON.parse(rowsa[i].location);
+        rowsa[i]['relativeDistance']= Math.sqrt((rowsa[i].location.latitude - row[0].location.latitude)**2 + (rowsa[i].location.longitude - row[0].location.longitude)**2)
+        rowsa[i]['workLoad'] = len
+        // console.log(len)
+      
+      }
+
+ 
+      rowsa.sort((a,b)=>{
+        return (a.relativeDistance - b.relativeDistance) 
+      });
+
+
+        res.json(rowsa);
+      });
+      
+      
+      
+    }
+  });
 });
 
 app.post('/task')
