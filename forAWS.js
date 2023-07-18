@@ -2,7 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3');
 const json = require('json');
 const app = express();
-
+var cors = require('cors');
 const path = require('path')
 const auth_controller = require('./controllers/auth.controller.js')
 const imagesRoute = require('./routes/images.js')
@@ -10,6 +10,25 @@ const imagesRoute = require('./routes/images.js')
 // Create a new SQLite database connection
 // const db = new sqlite3.Database(':memory:'); 
 
+
+
+
+app.use(cors());
+
+
+const ImageKit = require('imagekit');
+const imagekit = new ImageKit({ 
+  publicKey : "public_kihjdWkJcQHMmeUpP2E4FU/Og2Q=",
+  privateKey : "private_/sskfnb5JRWagUEfKNiLhz5J9Uo=",
+  urlEndpoint : "https://ik.imagekit.io/uxv7hoiuz"
+})
+
+
+app.get("/auth", function (req, res) {
+  var signature = imagekit.getAuthenticationParameters();
+  res.status(200);
+  res.send(signature);
+});
 
 
 const db = new sqlite3.Database('database.db', (err) => {
@@ -20,9 +39,48 @@ const db = new sqlite3.Database('database.db', (err) => {
   console.log('Connected to database SQLite database.');
 });
 
+app.get('/proofs',(req,res)=>{
+  db.all('SELECT * FROM proofs',(err,rows)=>{
+    if(err){
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+    else{
+      res.json(rows)
+    }
+  })
+})
 
+app.get('/proofs/:auditorId/',(req,res)=>{
+  const {auditorId } = req.params;
+  db.all('SELECT * FROM proofs WHERE auditorId = ?',[auditorId],(err,rows)=>{
+    if(err){
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+    else{
+      res.json(rows)
+    }
+  })
+})
 
-
+app.get('/proofs/:auditorId/:url',(req,res)=>{
+  const {auditorId ,url} = req.params;
+  console.log(url)
+  db.run(
+    'INSERT INTO proofs(url, auditorId) VALUES(?,?)',
+    [ url,auditorId],
+    (err,row) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        console.log(row)
+        res.status(200).send('proofs created successfully');
+      }
+    }
+  )
+})
 
 app.get('/login/:email&:password',(req,res)=>{
   const {email,password}  = req.params;

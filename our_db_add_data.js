@@ -34,7 +34,10 @@ db.serialize(() => {
 
 // male-1,female-2,non-binary-3,prefer not to say-4
 
-
+db.serialize(()=>{
+  db.run('CREATE TABLE IF NOT EXISTS proofs(id INTEGER PRIMARY KEY AUTOINCREMENT ,url TEXT,auditorId INTEGER ,FOREIGN KEY (auditorId) REFERENCES auditors(auditorId))');
+  db.run(`INSERT INTO proofs(id,url,auditorId) VALUES(1,'asdfgh' , 404)`);
+})
 
 db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS managers (managerId INTEGER PRIMARY KEY AUTOINCREMENT,profile_pic BLOB NULL, name TEXT, age number(3),gender INTEGER, email TEXT,phoneNumber varchar(13),address TEXT,password varchar(50))');
@@ -55,9 +58,9 @@ db.serialize(() => {
   db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
           VALUES (4, 'Sundae', 789729, 65775110, '2017-07-04', '2022-09-01', 56, 68, 9, 2)`);
   db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
-          VALUES (3, 'Fortune', 385031, 64063289, '2013-03-09', '2023-06-24', 536, 72, 19, 3)`);
+          VALUES (5, 'Fortune', 385031, 64063289, '2013-03-09', '2023-06-24', 536, 72, 19, 3)`);
   db.run(`INSERT INTO subtasks (subtaskId, stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId)
-          VALUES (3, 'Nestle', 349823, 76373004, '2019-07-01', '2023-02-01', 349, 8, 1, 3)`);
+          VALUES (6, 'Nestle', 349823, 76373004, '2019-07-01', '2023-02-01', 349, 8, 1, 3)`);
 });
 
 
