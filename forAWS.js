@@ -409,7 +409,7 @@ app.post('/tasks', (req, res) => {
 
   db.run(
     'INSERT INTO tasks (name, date, location, taskStatus, managerAssigned, startTime, endTime, distributorDetails, companyDetails) ' +
-    'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [
       name,
       date,
@@ -421,11 +421,13 @@ app.post('/tasks', (req, res) => {
       distributorDetails,
       companyDetails
     ],
-    function(err) {
+    function(err,row) {
       if (err) {
         console.error(err.message);
+        console.log(row)
         res.status(500).send('Internal Server Error');
       } else {
+
         const taskId = this.lastID;
         res.status(200).json({ taskId, name, date, location, taskStatus, auditorAssigned, managerAssigned, startTime, endTime, distributorDetails, companyDetails });
       }
