@@ -166,7 +166,7 @@ db.run(
     'dispose the dolo650 tablets',
     '2021-1-5',
     '{"latitude": 45.678, "longitude": 90.123}',
-    3,
+    2,
     967891,
     76543,
     '5:45:00',
@@ -185,7 +185,7 @@ db.run(
   // vansh
 });
 
-// 0 - unassigned , 1 - in progress , 3 - completed 
+// 0 - unassigned , 1 - in progress , 2 - completed 
 
 
 
