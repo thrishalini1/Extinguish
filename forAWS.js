@@ -463,7 +463,7 @@ app.post('/listOfTasks/subTasks/:taskId', (req, res) => {
   const { stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer } = req.body;
 
   db.run(
-    'INSERT INTO subtasks ( stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO subtasks ( stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [ stockName, pid, batchNo, mfgDate, expDate, noOfCases, pieces, outer, taskId],
     (err) => {
       if (err) {
