@@ -259,6 +259,7 @@ app.get('/listOftasks',(req,res)=>{
             res.status(500).send('Internal Server Error');
         }
         else{
+
           for(let i=0;i<rows.length;i++)
           { rows[i].location = JSON.parse(rows[i].location);
            rows[i].distributorDetails = JSON.parse(rows[i].distributorDetails)
@@ -418,8 +419,8 @@ app.post('/tasks', (req, res) => {
       managerAssigned,
       startTime,
       endTime,
-      distributorDetails,
-      companyDetails
+      JSON.stringify(distributorDetails),
+      JSON.stringify(companyDetails)
     ],
     function(err,row) {
       if (err) {
