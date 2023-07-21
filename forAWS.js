@@ -409,13 +409,14 @@ app.post('/tasks', (req, res) => {
   } = req.body;
 
   db.run(
-    'INSERT INTO tasks (name, date, location, taskStatus, managerAssigned, startTime, endTime, distributorDetails, companyDetails) ' +
-    'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO tasks (name, date, location, taskStatus,auditorAssigned, managerAssigned, startTime, endTime, distributorDetails, companyDetails) ' +
+    'VALUES (?, ?, ?, ?, ?, ?, ?,?, ?, ?)',
     [
       name,
       date,
       JSON.stringify(location),
       taskStatus,
+      0,
       managerAssigned,
       startTime,
       endTime,
