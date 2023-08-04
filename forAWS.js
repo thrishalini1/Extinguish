@@ -502,7 +502,7 @@ app.get('/myAuditors/:managerId/:taskId', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       
-      row[0].location = JSON.parse(row[0].location);
+      // row[0].location = row[0].location;
 
       db.all('SELECT * FROM auditors WHERE managerId = ?',managerId , (err,rowsa)=>{
 
